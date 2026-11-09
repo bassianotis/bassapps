@@ -1,7 +1,7 @@
 // A consistent copy of the sign-in service's durable data, for the nightly backup and before each
 // ship: door.sqlite (SQLite's online backup, safe while the service runs), door.key and
 // internal.key. The copy is checked before it counts.
-//   node service/bin/backup.ts <into-folder>      DOOR_DATA_DIR as for the service
+//   node service/bin/backup.ts <into-folder>      DOOR_DATA_DIR and DOOR_SECRET_FILE as for the service
 import fs from 'node:fs';
 import path from 'node:path';
 import { backup, DatabaseSync } from 'node:sqlite';
@@ -16,7 +16,8 @@ fs.mkdirSync(into, { recursive: true, mode: 0o700 });
 const source = new DatabaseSync(path.join(dataDir, 'door.sqlite'), { readOnly: true });
 await backup(source, path.join(into, 'door.sqlite'));
 source.close();
-for (const key of ['door.key', 'internal.key']) fs.copyFileSync(path.join(dataDir, key), path.join(into, key));
+fs.copyFileSync(path.join(dataDir, 'door.key'), path.join(into, 'door.key'));
+fs.copyFileSync(process.env.DOOR_SECRET_FILE ?? path.join(dataDir, 'internal.key'), path.join(into, 'internal.key'));
 for (const f of ['door.sqlite', 'door.key', 'internal.key']) fs.chmodSync(path.join(into, f), 0o600);
 // One self-contained file (no write-ahead log beside it), then its check
 const copy = new DatabaseSync(path.join(into, 'door.sqlite'));

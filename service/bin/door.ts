@@ -3,10 +3,12 @@
 // Environment:
 //   DOOR_DATA_DIR      where door.sqlite, door.key (signs the "known computer" mark) and internal.key
 //                      (the secret apps send) live. Back them up together. Default ./data (this repo)
+//   DOOR_SECRET_FILE   internal.key somewhere else, e.g. a folder shared with the apps, so they
+//                      see only it (default: in DOOR_DATA_DIR)
 //   DOOR_HOST, DOOR_PORT   where it listens (default 127.0.0.1:3102)
-//   DOOR_PUBLIC_URL    its own address, as browsers see it (default http://localhost:5175); live,
-//                      https://account.bassapps.net (also the link in the new sign-in email)
-//   DOOR_APPS          the apps, as JSON: [{"id":"mail","name":"Mail","url":"https://mail.bassapps.net"}]
+//   DOOR_PUBLIC_URL    its own address, as browsers see it (default http://localhost:5175), e.g.
+//                      https://account.example.net (also the link in the new sign-in email)
+//   DOOR_APPS          the apps, as JSON: [{"id":"mail","name":"Mail","url":"https://mail.example.net"}]
 //   DOOR_COOKIE, DOOR_KNOWN_COOKIE   cookie names (two copies on one machine need different ones)
 //   SECURE_COOKIES=1   when served over HTTPS
 //   TRUST_PROXY=1      believe X-Forwarded-For (only behind your own proxy)
@@ -36,11 +38,12 @@ if (process.env.SECURE_COOKIES === '1' && !publicUrl.startsWith('https://')) {
 fs.mkdirSync(dataDir, { recursive: true });
 const db = new DoorDb(path.join(dataDir, 'door.sqlite'));
 const door = new Door(db, loadOrCreateKey(path.join(dataDir, 'door.key')));
-const internalSecret = internalKey(path.join(dataDir, 'internal.key'));
+const internalSecret = internalKey(process.env.DOOR_SECRET_FILE ?? path.join(dataDir, 'internal.key'));
 if (!door.hasUsers()) log('no one can sign in yet: run `bassapps reset-passphrase` to create the login');
 
 /** The secret apps send to /internal (a file both can read; created on first run). */
 function internalKey(file: string): string {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
     if (!fs.existsSync(file)) fs.writeFileSync(file, crypto.randomBytes(32).toString('base64url') + '\n', { mode: 0o600, flag: 'wx' });
     return fs.readFileSync(file, 'utf8').trim();
 }

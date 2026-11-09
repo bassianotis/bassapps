@@ -18,8 +18,9 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY service/ service/
 COPY --from=pages /src/dist dist/
-# Its data: door.sqlite, door.key and internal.key (back them up together)
-RUN mkdir -p /data && chown node:node /data
+# Its data: door.sqlite, door.key and internal.key (back them up together). /run/bassapps can
+# hold internal.key apart, shared with the apps (DOOR_SECRET_FILE; compose.yml)
+RUN mkdir -p /data /run/bassapps && chown node:node /data /run/bassapps
 ENV DOOR_DATA_DIR=/data DOOR_HOST=0.0.0.0 DOOR_PORT=3102 DOOR_STATIC=/app/dist
 USER node
 EXPOSE 3102

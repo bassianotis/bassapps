@@ -9,6 +9,7 @@ data/
 *.key
 .env
 .env.*
+!.env.example
 
 # Your own installation's settings (deploy/install.env.example)
 private/

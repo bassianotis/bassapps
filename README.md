@@ -31,7 +31,29 @@ One sign-in for a family of self-hosted apps. Today it signs people in to [Elect
 - `Dockerfile`: the container (it builds the pages itself); `deploy/`: a compose file for a Raspberry Pi, and a settings template.
 - `tools/bassapps` runs the commands; `tools/ship-pi.sh` builds and ships to the Pi.
 
-## Running it
+## Run it with Mail
+You need a computer or server with Docker. This starts Bassapps and [Electronic Mail](https://github.com/bassianotis/electronic-mail) together, with Mail built straight from GitHub:
+
+```bash
+git clone https://github.com/bassianotis/bassapps.git
+cd bassapps
+cp .env.example .env      # the two addresses, and the username Mail accepts (MAIL_USERS)
+docker compose up -d
+docker compose exec -it account node service/bin/bassapps.ts reset-passphrase <username>
+```
+
+The last line creates your login, with the same username as `MAIL_USERS`. Then open http://localhost:3100, sign in, and add your email accounts.
+
+- **From other computers:** in `.env`, use your HTTPS addresses (e.g. `https://account.example.net` and `https://mail.example.net`) and set `SECURE_COOKIES=1` and `TRUST_PROXY=1`. Then point your reverse proxy at ports 3102 and 3100, and have it return 404 for `/internal/` on both.
+- **Updating:** `git pull && docker compose up -d --build`.
+- **Backing up:** each keeps a checked copy, which `docker compose cp` brings out:
+  ```bash
+  docker compose exec account node service/bin/backup.ts /data/backup && docker compose cp account:/data/backup ./account-backup
+  docker compose exec mail node engine/bin/backup.ts /data/backup && docker compose cp mail:/data/backup ./mail-backup
+  ```
+- **How they're joined:** the two share one secret, `internal.key`. Bassapps creates it on its first start, in a volume of its own, and Mail can read only that file.
+
+## Working on it
 You need Node 22.18 or newer (24 LTS recommended).
 
 ```bash
@@ -55,6 +77,7 @@ On a Raspberry Pi, `tools/ship-pi.sh` builds the image on your computer, sends i
 | `TRUST_PROXY=1` | Believe `X-Forwarded-For` (only behind your own proxy) |
 | `MAIL_INTERNAL_URL` | Where Mail listens, for the new-computer email |
 | `DOOR_DATA_DIR` | `door.sqlite`, `door.key` and `internal.key` (the secret apps share). Back them up together. |
+| `DOOR_SECRET_FILE` | `internal.key` somewhere else, such as a folder shared with the apps, so they see only it |
 | `DOOR_HOST`, `DOOR_PORT`, `DOOR_STATIC`, `DOOR_COOKIE`, `DOOR_KNOWN_COOKIE` | Where it listens, its built pages, and its cookie names |
 
 ## Commands
@@ -64,7 +87,7 @@ On a Raspberry Pi, `tools/ship-pi.sh` builds the image on your computer, sends i
 - `import-user <username> <app.sqlite> [mail login]`: moves an existing Mail login over, with the same passphrase.
 
 ## Backups
-`service/bin/backup.ts <folder>` writes a checked copy of `door.sqlite` and both keys. Electronic Mail's nightly backup on the Pi runs it.
+`service/bin/backup.ts <folder>` writes a checked copy of `door.sqlite` and both keys (`internal.key` from `DOOR_SECRET_FILE` when it's set). Electronic Mail's nightly backup on the Pi runs it.
 
 ## License
 GPL-3.0. See `LICENSE`.

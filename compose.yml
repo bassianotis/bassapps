@@ -1,0 +1,45 @@
+# Bassapps with Electronic Mail on one computer or server: one sign-in, and Mail behind it.
+#   cp .env.example .env          then fill it in
+#   docker compose up -d          builds both (Mail straight from GitHub) and starts them
+#   docker compose exec -it account node service/bin/bassapps.ts reset-passphrase <username>
+# Then open MAIL_URL, sign in, and add your email accounts. README.md, "Run it with Mail".
+services:
+  account:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${ACCOUNT_PORT:-3102}:3102"   # this computer only: a proxy on it reaches it here
+    environment:
+      DOOR_PUBLIC_URL: ${ACCOUNT_URL:?set ACCOUNT_URL in .env}
+      DOOR_APPS: '[{"id":"mail","name":"Mail","url":"${MAIL_URL:?set MAIL_URL in .env}"}]'
+      DOOR_SECRET_FILE: /run/bassapps/internal.key
+      MAIL_INTERNAL_URL: http://mail:3100
+      SECURE_COOKIES: ${SECURE_COOKIES:-0}
+      TRUST_PROXY: ${TRUST_PROXY:-0}
+      TZ: ${TZ:-UTC}
+    volumes:
+      - account-data:/data
+      - shared:/run/bassapps          # holds only internal.key, the secret the two share
+  mail:
+    build: ${MAIL_SOURCE:-https://github.com/bassianotis/electronic-mail.git#main}
+    restart: unless-stopped
+    depends_on:
+      account:
+        condition: service_healthy    # it creates the shared secret on its first start
+    ports:
+      - "127.0.0.1:${MAIL_PORT:-3100}:3100"
+    environment:
+      AUTH_MODE: door
+      MAIL_USERS: ${MAIL_USERS:?set MAIL_USERS in .env}
+      DOOR_INTERNAL_URL: http://account:3102
+      DOOR_PUBLIC_URL: ${ACCOUNT_URL}
+      DOOR_SECRET_FILE: /run/bassapps/internal.key
+      SECURE_COOKIES: ${SECURE_COOKIES:-0}
+      TZ: ${TZ:-UTC}
+    volumes:
+      - mail-data:/data
+      - shared:/run/bassapps:ro
+volumes:
+  account-data:
+  mail-data:
+  shared:
