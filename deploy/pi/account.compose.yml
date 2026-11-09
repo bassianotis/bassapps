@@ -1,0 +1,25 @@
+# The sign-in service on the Pi, in <PI_DIR>/account beside the .env that tools/ship-pi.sh writes
+# from private/install.env. It joins the proxy's network (Nginx Proxy Manager's) with no ports of
+# its own; the proxy forwards the service's address to bassapps-account:3102.
+# Its data stays in ./data: door.sqlite, door.key and internal.key (Mail reads internal.key too).
+name: bassapps-account
+services:
+  account:
+    image: bassapps-account:current
+    container_name: bassapps-account
+    restart: unless-stopped
+    environment:
+      DOOR_PUBLIC_URL: ${ACCOUNT_URL:?its own address, as browsers see it}
+      DOOR_APPS: ${APPS:?the apps, as JSON}
+      SECURE_COOKIES: "1"
+      TRUST_PROXY: "1"
+      MAIL_INTERNAL_URL: http://bassapps-mail:3100
+      TZ: ${TIME_ZONE:-UTC}
+    volumes:
+      - ./data:/data
+      - ../backups:/backups
+    mem_limit: 256m
+    networks: [npm_default]
+networks:
+  npm_default:
+    external: true

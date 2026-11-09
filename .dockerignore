@@ -1,0 +1,11 @@
+# Only what the image needs: the pages' sources and the service (without its data or tests)
+*
+!package.json
+!package-lock.json
+!vite.config.ts
+!tsconfig.json
+!pages/
+!service/
+service/test
+**/.DS_Store
+**/*.log

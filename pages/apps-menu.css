@@ -1,0 +1,126 @@
+/* The Bassapps apps tile and menu (AppsMenu.tsx; sign-in-design.md §4), from the theme's tokens */
+
+.bassapps-tile {
+    position: absolute;
+    top: 10px;
+    left: 6px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface-card);
+    color: var(--color-text-main);
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease);
+}
+
+.bassapps-tile:hover,
+.bassapps-tile-open {
+    background: var(--color-bg-hover);
+}
+
+.bassapps-tile:focus-visible {
+    outline: 2px solid var(--color-action);
+    outline-offset: 1px;
+}
+
+.bassapps-rail-divider {
+    position: absolute;
+    top: 56px;
+    left: 12px;
+    width: 24px;
+    height: 1px;
+    background: var(--border-strong);
+}
+
+/* Fixed beside the tile (the rail clips what overflows it) */
+.bassapps-menu {
+    position: fixed;
+    top: 10px;
+    left: 52px;
+    z-index: 600;
+    width: 280px;
+    box-sizing: border-box;
+    padding: 4px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+    color: var(--color-text-main);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.bassapps-menu-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 12px 10px;
+}
+
+.bassapps-menu-user {
+    font-size: 12px;
+    color: var(--color-text-faint);
+}
+
+.bassapps-wordmark {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-main);
+}
+
+.bassapps-wordmark-apps {
+    color: var(--color-text-muted);
+}
+
+.bassapps-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    padding: 0 12px;
+    border: 0;
+    border-radius: max(4px, calc(var(--radius-md) - 4px));
+    background: transparent;
+    color: var(--color-text-main);
+    font: inherit;
+    font-size: 14px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease);
+}
+
+.bassapps-menu-item:hover {
+    background: var(--color-bg-hover);
+}
+
+.bassapps-menu-item:focus-visible {
+    outline: 2px solid var(--color-action);
+    outline-offset: -2px;
+}
+
+.bassapps-menu-item svg {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+.bassapps-menu-here {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--color-text-faint);
+}
+
+.bassapps-menu-sep {
+    height: 1px;
+    margin: 4px 8px;
+    background: var(--color-border);
+}

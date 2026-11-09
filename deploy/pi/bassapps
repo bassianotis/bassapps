@@ -1,0 +1,5 @@
+#!/bin/sh
+# The sign-in service's commands on the Pi, as the Forgot page says: bassapps reset-passphrase,
+# bassapps apps <username> [...], bassapps import-user ... (they run inside its container).
+if [ -t 0 ]; then flags=-it; else flags=-i; fi
+exec docker exec $flags bassapps-account node service/bin/bassapps.ts "$@"

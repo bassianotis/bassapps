@@ -1,0 +1,3 @@
+#!/bin/sh
+# The sign-in service's commands, on the server itself: bassapps reset-passphrase | import-user | apps
+cd "$(dirname "$0")/.." && exec node service/bin/bassapps.ts "$@"

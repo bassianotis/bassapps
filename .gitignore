@@ -1,0 +1,14 @@
+node_modules
+dist
+.DS_Store
+*.log
+# The service's data: its database and keys (never in git; back them up together)
+data/
+*.sqlite
+*.sqlite-*
+*.key
+.env
+.env.*
+
+# Your own installation's settings (deploy/install.env.example)
+private/
