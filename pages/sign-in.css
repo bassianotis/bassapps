@@ -1,0 +1,271 @@
+/* The sign-in card (board P6; SignInCard.tsx): one build for the Bassapps sign-in page and Mail on its
+   own. The same file in both repos (bassapps pages/sign-in.css, Mail src/shared/sign-in.css); keep
+   them in step. On the family's tokens (tokens.css, and the --size-* steps each app defines). */
+
+/* The deepest surface, one solid card */
+.si {
+    min-height: 100vh;
+    padding: var(--space-16) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    background: var(--bg-rail);
+    color: var(--text-1);
+    font-size: var(--size-body);
+    line-height: 1.5;
+}
+
+.si-card {
+    width: 440px;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: var(--surface-1);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-3);
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), var(--shadow-overlay);
+}
+
+.si-body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.si-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+/* Why this computer was signed out: a band across the top of the card */
+.si-banner {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-4) 40px;
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--line-1);
+}
+
+.si-banner svg {
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: var(--text-3);
+}
+
+.si-banner b {
+    font-weight: 600;
+}
+
+.si-s {
+    color: var(--text-3);
+}
+
+/* Mail on its own: its mark and name where Bassapps has its wordmark */
+.si-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-1);
+    font-size: 18px;
+    letter-spacing: -0.02em;
+}
+
+.si-h {
+    margin: 0;
+    font-size: var(--size-page);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.si-sub {
+    margin: var(--space-1) 0 0;
+    color: var(--text-3);
+}
+
+.si-lab {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-size: 13.5px;
+    font-weight: var(--weight-medium);
+    color: var(--text-2);
+}
+
+.si-inpw {
+    position: relative;
+}
+
+/* The field keeps its look; its focus is the family ring (tokens.css :focus-visible), radius 6 */
+.si-inp {
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--field-lg);
+    padding: 0 14px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-2);
+    background: var(--bg-page);
+    color: var(--text-1);
+    font: inherit;
+    font-size: 15px;
+}
+
+.si-inp--secret {
+    padding-right: 64px;
+}
+
+.si-inp:disabled {
+    opacity: 0.5;
+}
+
+.si-inp:-webkit-autofill,
+.si-inp:-webkit-autofill:hover,
+.si-inp:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-1);
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-page) inset;
+    caret-color: var(--text-1);
+}
+
+.si-show {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    height: var(--control-md);
+    padding: 0 10px;
+    border: 0;
+    border-radius: var(--radius-2);
+    background: transparent;
+    color: var(--text-3);
+    font: inherit;
+    font-size: var(--size-small);
+    cursor: pointer;
+}
+
+.si-show:hover:not(:disabled) {
+    background: var(--fill-hover);
+    color: var(--text-1);
+}
+
+.si-primary {
+    height: var(--control-xl);
+    border: 0;
+    border-radius: var(--radius-2);
+    background: var(--action);
+    color: var(--on-action);
+    font: inherit;
+    font-size: 15px;
+    font-weight: var(--weight-medium);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    cursor: pointer;
+}
+
+.si-primary:disabled {
+    background: var(--fill-hover);
+    color: var(--text-4);
+    box-shadow: none;
+    cursor: default;
+}
+
+.si-secondary {
+    height: var(--control-xl);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-2);
+    background: var(--surface-raised);
+    color: var(--text-1);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.si-link {
+    align-self: center;
+    padding: var(--space-1);
+    border: 0;
+    background: none;
+    color: var(--text-3);
+    font: inherit;
+    font-size: 13.5px;
+    cursor: pointer;
+}
+
+.si-link:hover {
+    color: var(--text-1);
+    text-decoration: underline;
+}
+
+/* A problem: a bordered note above the button */
+.si-msg {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-3);
+    background: var(--bg-page);
+    border: 1px solid var(--line-1);
+    font-size: 13.5px;
+}
+
+.si-msg svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--danger);
+}
+
+.si-num {
+    font-variant-numeric: tabular-nums;
+    color: var(--text-1);
+}
+
+.si-text {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-3);
+}
+
+.si-cap {
+    margin: 0 0 var(--space-2);
+    font-size: var(--size-small);
+    color: var(--text-3);
+}
+
+.si-code {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-3);
+    background: var(--bg-rail);
+    border: 1px solid var(--line-1);
+    color: var(--text-1);
+    font-family: var(--font-mono);
+    font-size: var(--size-small);
+    overflow-wrap: anywhere;
+}
+
+.si-ft {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-4);
+}
+
+/* Signing in…: one turn a second (N3) */
+.si-spin {
+    animation: si-spin 1s linear infinite;
+}
+
+@keyframes si-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .si-spin {
+        animation: none;
+    }
+}

@@ -1,0 +1,195 @@
+/* Bassapps design system v2: tokens (2026-11-12)
+ * One file for the whole family (Mail, Tasks and calendar, notes, Account).
+ * Source: design-system-v2-foundations.md, rules in design-system-v2-rules.md.
+ * Components use role tokens only (rule V2). Primitives are for this file.
+ * Dark only. No theme switch.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---------- Primitives ---------- */
+  --grey-0: #0f0f10;
+  --grey-1: #141415;
+  --grey-2: #19191b;
+  --grey-3: #1e1e20;
+  --grey-4: #232325;
+  --grey-5: #28282b;
+  --grey-6: #2e2e31;
+  --white-a08: rgba(237, 237, 237, 0.08);
+  --white-a13: rgba(237, 237, 237, 0.13);
+  --white-a16: rgba(237, 237, 237, 0.16);
+  --white-a20: rgba(237, 237, 237, 0.20);
+  --white-a28: rgba(237, 237, 237, 0.28);
+  --ink-1: #ededed;
+  --ink-2: #d6d6d9;
+  --ink-3: #a1a1a6;
+  --ink-4: #8e8e94;
+  --amber-500: #cf9f52;
+  --amber-400: #d5ab67;
+  --amber-600: #c3934a;
+  --amber-ink: #17110a;
+  --red-500: #e47a73;
+  --red-ink: #1a0d0c;
+  --green-500: #6fb390;
+
+  /* ---------- Roles: surfaces ---------- */
+  --bg-rail: var(--grey-0);
+  --bg-page: var(--grey-1);
+  --surface-1: var(--grey-2);        /* cards, fields, the reading card */
+  --surface-2: var(--grey-3);        /* side navigation, band notes */
+  --surface-raised: var(--grey-4);   /* menus, dialogs, panels, notices */
+  --fill-hover: var(--grey-5);
+  --fill-selected: var(--grey-6);    /* selected, current, pressed */
+  --scrim: rgba(5, 6, 8, 0.6);       /* the only scrim */
+
+  /* ---------- Roles: lines ---------- */
+  --line-1: var(--white-a08);        /* dividers, card edges */
+  --line-2: var(--white-a13);        /* buttons, menus, panels */
+  --line-3: var(--white-a20);        /* fields, tree guides */
+  --line-field-hover: var(--white-a28);
+  --line-current: var(--white-a16);  /* inner ring on a current row, stack edges */
+
+  /* ---------- Roles: text ---------- */
+  --text-1: var(--ink-1);            /* the interface */
+  --text-2: var(--ink-2);            /* letter text, Reader */
+  --text-3: var(--ink-3);            /* secondary */
+  --text-4: var(--ink-4);            /* faint: dates, counts, hints. Not on fill-selected (use text-3). */
+
+  /* ---------- Roles: action and status ---------- */
+  --action: var(--amber-500);
+  --action-hover: var(--amber-400);
+  --action-pressed: var(--amber-600);
+  --on-action: var(--amber-ink);
+  --action-tint: rgba(207, 159, 82, 0.10);
+  --danger: var(--red-500);
+  --danger-hover: #e88a84;
+  --danger-pressed: #d96f68;
+  --on-danger: var(--red-ink);
+  --danger-tint: rgba(228, 122, 115, 0.10);
+  --success: var(--green-500);
+  --focus-ring: var(--amber-500);
+
+  /* ---------- Component tokens (only where a component truly differs) ---------- */
+  --stack-edge: #2a2a2d;
+  --sliver-near: var(--grey-4);      /* the slivers under a multi-message card: the nearest greys to */
+  --sliver-far: var(--grey-3);       /* their old #212123 and #1d1d1f (owner, 2026-11-13) */
+  --paper: #e9e5dd;                  /* designed mail; the sender's colours on top */
+
+  /* ---------- Type ---------- */
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; /* the system font; the Design trials panel may override it for the owner only */
+  --font-letter: var(--font-ui);
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --type-caption: 12px/16px var(--font-ui);
+  --type-small: 13px/18px var(--font-ui);
+  --type-body: 14px/20px var(--font-ui);
+  --type-large: 16px/24px var(--font-ui);
+  --type-title: 500 18px/24px var(--font-ui);
+  --type-page: 500 24px/30px var(--font-ui);
+  --type-wordmark: 20px/28px var(--font-ui);   /* the app name in the top bar only */
+  --letter-small: 15px/24px var(--font-letter);
+  --letter-medium: 16px/26px var(--font-letter);
+  --letter-large: 18px/29px var(--font-letter);
+  --letter-xlarge: 20px/32px var(--font-letter);
+  --letter-measure: 680px;
+
+  /* ---------- Space ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---------- Sizes ---------- */
+  --control-sm: 28px;    /* notices, the band */
+  --control-md: 36px;    /* the default */
+  --control-lg: 40px;    /* Send, the reading bar */
+  --control-xl: 48px;    /* sign-in only */
+  --field: 40px;
+  --field-lg: 48px;      /* sign-in */
+  --target-min: 24px;
+  --card-padding: 24px;
+  --card-gap: 16px;
+  --row-menu: 32px;
+  --row-tree: 52px;
+  --rail: 48px;
+  --topbar: 64px;
+  --tree-panel: 300px;
+  --reading-max: 1000px; /* the reading card and new message */
+  --column-inbox: 800px;
+  --column-bucket: 1152px;
+  --dialog-small: 400px; /* Edit bucket */
+  --dialog-settings: 880px;
+  --corner-window: 458px;
+
+  /* ---------- Shape ---------- */
+  --radius-1: 4px;   /* chips, inline things, inner corners */
+  --radius-2: 6px;   /* controls */
+  --radius-3: 8px;   /* cards, panels, menus, dialogs, notices */
+  --radius-full: 999px; /* true circles and the pill only */
+
+  /* ---------- Elevation ---------- */
+  --shadow-raised: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-overlay: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+  /* ---------- Layers (code names the layer, never a number) ---------- */
+  --layer-page: 0;
+  --layer-chrome: 10;
+  --layer-view: 20;
+  --layer-panel: 30;
+  --layer-dialog: 40;
+  --layer-popover: 50;
+  --layer-drag: 60;
+  --layer-notice: 70;
+  --layer-critical: 80;
+  --layer-tooltip: 90;
+
+  /* ---------- Motion ---------- */
+  --ease-in: cubic-bezier(0.22, 1, 0.36, 1);   /* arriving */
+  --ease-out: cubic-bezier(0.4, 0, 1, 1);      /* leaving */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 350ms;
+  --drag-scale: 0.5;
+  --drag-opacity: 0.85;
+  --disabled-opacity: 0.4;
+
+  /* ---------- Icons ---------- */
+  --icon-stroke: 1.5;
+  --icon-sm: 14px;
+  --icon-md: 16px;
+  --icon-lg: 20px;
+}
+
+/* Every control inherits the font (ends the browser's 13.33px buttons). */
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* One icon stroke for every lucide icon, in every app (sign-in and Account included). */
+.lucide { stroke-width: var(--icon-stroke); }
+
+/* The focus ring: visible, never removed. Inset where a container clips (rows, strips). */
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+.ring-inset:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--focus-ring); }
+
+/* Tabular numbers for dates, times and counts. */
+.num { font-variant-numeric: tabular-nums; }
+
+/* Reduce motion: fades only, same durations. Components swap their
+ * movement for a fade when --motion-move is 0 (never a global transform reset,
+ * which would break layout). */
+:root { --motion-move: 1; }
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-move: 0; --drag-scale: 1; }
+}
+
+/* Windows high contrast: keep rings and edges. */
+@media (forced-colors: active) {
+  :focus-visible { outline: 2px solid CanvasText; }
+}

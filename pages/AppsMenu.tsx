@@ -2,8 +2,12 @@
  * The Bassapps apps tile and menu (sign-in-design.md §4): a 36px tile at the very top of the 48px
  * rail, with a short divider under it, in every app of the family. The menu opens to its right,
  * level with it: the wordmark and the username, the apps that exist (the current one says "Open"),
- * then Account and Sign out. Colours come from the theme's tokens, so it sits in Mail's light and
- * dark themes and on the Account page alike.
+ * then Account and Sign out. Colours come from the family's tokens (tokens.css), so it sits in Mail
+ * and on the Account page alike.
+ * Keys as the shared Menu has them: Enter, Space or ↓ opens it; the arrows, Home and End move; Esc
+ * closes it and the focus goes back to the tile; Tab leaves it, closed. Self-contained (its own
+ * keys, the family's tokens only), so it is one build: the same file sits in both repos (Mail:
+ * src/shared/AppsMenu.tsx; bassapps: pages/AppsMenu.tsx), with apps-menu.css. Keep them in step.
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -60,6 +64,12 @@ export const AppsMenu: React.FC<{
                 const list = items();
                 const at = list.indexOf(document.activeElement as HTMLElement);
                 list[(at + (e.key === 'ArrowDown' ? 1 : -1) + list.length) % list.length]?.focus();
+            } else if (e.key === 'Home' || e.key === 'End') {
+                e.preventDefault();
+                const list = items();
+                list[e.key === 'Home' ? 0 : list.length - 1]?.focus();
+            } else if (e.key === 'Tab') {
+                setOpen(false); // Tab leaves it, closed (the shared menu's keys)
             }
         };
         const onDown = (e: PointerEvent) => {
@@ -84,6 +94,7 @@ export const AppsMenu: React.FC<{
                 aria-haspopup="menu"
                 aria-expanded={open}
                 onClick={() => setOpen(o => !o)}
+                onKeyDown={e => { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); } }}
             >
                 <Mark />
             </button>
