@@ -174,9 +174,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* One icon stroke for every lucide icon, in every app (sign-in and Account included). */
 .lucide { stroke-width: var(--icon-stroke); }
 
-/* The focus ring: visible, never removed. Inset where a container clips (rows, strips). */
+/* The focus ring, for the keyboard (rule K3, revised 2026-11-16): on what you Tab to, never on a click.
+   Inset where a container clips (rows, strips). Boxed fields and writing surfaces show focus their own
+   way, without it (their own CSS). */
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
 .ring-inset:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--focus-ring); }
+/* Rule K3: after a pointer, focus that moves on its own (a dialog opening, the next card, the opener
+   after a close) shows no ring; the next key press brings it back (inputModality.ts) */
+:root[data-input="pointer"] { --focus-ring: transparent; }
 
 /* Tabular numbers for dates, times and counts. */
 .num { font-variant-numeric: tabular-nums; }

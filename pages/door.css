@@ -57,7 +57,7 @@ button {
 }
 
 :focus-visible {
-    outline: 2px solid var(--color-action);
+    outline: 2px solid var(--focus-ring); /* the family ring: none after a pointer (rule K3, tokens.css) */
     outline-offset: 1px;
 }
 
@@ -158,12 +158,11 @@ input:-webkit-autofill:focus {
     font-size: 15px;
 }
 
+/* "This computer": plain words in text-3 after the computer's name, no boxed badge (board
+   P5-fields-dialogs-end-state, row 7) */
 .ac-tag {
-    padding: 2px 6px;
-    border: 1px solid var(--border-strong);
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--color-text-muted);
+    font-size: var(--size-body);
+    color: var(--text-3);
 }
 
 .ac-dev-meta {
@@ -173,14 +172,17 @@ input:-webkit-autofill:focus {
     font-variant-numeric: tabular-nums;
 }
 
+/* The Account page's buttons are on the Button's scale (board P5-buttons-sorted, row 5): secondary 36,
+   danger-text (secondary with red words, .ac-danger), primary 40, all 14px / 500 with radius 6 */
 .ac-btn2 {
     height: 36px;
     padding: 0 14px;
     border: 1px solid var(--border-strong);
-    border-radius: 8px;
+    border-radius: var(--radius-2);
     background: var(--surface-raised);
     color: var(--color-text-main);
-    font-size: 13.5px;
+    font-size: var(--size-body);
+    font-weight: var(--weight-medium);
     transition: background-color var(--dur-fast) var(--ease);
 }
 
@@ -226,8 +228,16 @@ input:-webkit-autofill:focus {
     color: var(--color-text-main);
     font: inherit;
     font-size: 15px;
-    /* Focused: the family ring (:focus-visible, tokens.css), as the sign-in card's fields; no border
-       change, no glow (owner, Checkpoint B) */
+    /* Focused: a boxed field, as the sign-in card's: no ring, the edge turns text-3, clicked or Tabbed
+       into (rule K3, revised 2026-11-16) */
+}
+
+.ac-inp:focus {
+    outline: none;
+}
+
+.ac-inp:focus:not(.bad) {
+    border-color: var(--text-3);
 }
 
 .ac-inp.bad {
@@ -241,14 +251,14 @@ input:-webkit-autofill:focus {
 }
 
 .ac-primary {
-    height: 44px;
-    padding: 0 20px;
+    height: var(--control-lg);
+    padding: 0 var(--space-4);
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-2);
     background: var(--color-action);
     color: var(--color-on-action);
-    font-size: 15px;
-    font-weight: 500;
+    font-size: var(--size-body);
+    font-weight: var(--weight-medium);
 }
 
 .ac-primary:disabled {
@@ -344,7 +354,7 @@ input:-webkit-autofill:focus {
     height: 40px;
     padding: 0 16px;
     border: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-2);
     background: var(--color-danger);
     color: #1a0d0c;
     font-size: 14px;

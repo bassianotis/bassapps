@@ -8,6 +8,10 @@ import './tokens.css'
 import './door.css'
 import { SignIn } from './SignIn'
 import { Account } from './Account'
+import { watchInput } from './inputModality'
+
+// The focus ring shows only after a key press when focus moves on its own (rule K3)
+watchInput()
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

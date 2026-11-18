@@ -27,7 +27,7 @@
 }
 
 .bassapps-tile:focus-visible {
-    outline: 2px solid var(--action);
+    outline: 2px solid var(--focus-ring); /* the family ring: none after a pointer (rule K3) */
     outline-offset: 1px;
 }
 
@@ -105,7 +105,7 @@
 }
 
 .bassapps-menu-item:focus-visible {
-    outline: 2px solid var(--action);
+    outline: 2px solid var(--focus-ring); /* the family ring: none after a pointer (rule K3) */
     outline-offset: -2px;
 }
 

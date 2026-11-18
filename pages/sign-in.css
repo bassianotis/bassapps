@@ -99,7 +99,9 @@
     position: relative;
 }
 
-/* The field keeps its look; its focus is the family ring (tokens.css :focus-visible), radius 6 */
+/* A boxed field, radius 6: focused, its edge turns text-3, with no ring, clicked or Tabbed into (rule K3).
+   The Field's large size, 48 high at 16px (board P5-fields-dialogs-end-state, row 2), in the card's own
+   CSS until the family's shared package exists */
 .si-inp {
     box-sizing: border-box;
     width: 100%;
@@ -110,7 +112,12 @@
     background: var(--bg-page);
     color: var(--text-1);
     font: inherit;
-    font-size: 15px;
+    font-size: var(--size-large);
+}
+
+.si-inp:focus {
+    outline: none;
+    border-color: var(--text-3);
 }
 
 .si-inp--secret {
@@ -149,6 +156,8 @@
     color: var(--text-1);
 }
 
+/* The card's buttons are the Button's sign-in size (board P5-buttons-sorted, row 5): 48 high, 16px, radius
+   6; in the card's own CSS until the family's shared package exists */
 .si-primary {
     height: var(--control-xl);
     border: 0;
@@ -156,7 +165,7 @@
     background: var(--action);
     color: var(--on-action);
     font: inherit;
-    font-size: 15px;
+    font-size: var(--size-large);
     font-weight: var(--weight-medium);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
     display: flex;
@@ -180,10 +189,13 @@
     background: var(--surface-raised);
     color: var(--text-1);
     font: inherit;
-    font-size: 15px;
+    font-size: var(--size-large);
+    font-weight: var(--weight-medium);
     cursor: pointer;
 }
 
+/* "Forgot your passphrase?": the Button's link kind (13px, text-3, underlined under the pointer, never
+   amber), in the card's own CSS until the family's shared package exists */
 .si-link {
     align-self: center;
     padding: var(--space-1);
@@ -191,13 +203,16 @@
     background: none;
     color: var(--text-3);
     font: inherit;
-    font-size: 13.5px;
+    font-size: var(--size-small);
+    line-height: 18px;
     cursor: pointer;
 }
 
 .si-link:hover {
     color: var(--text-1);
     text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--text-1) 40%, transparent);
+    text-underline-offset: 3px;
 }
 
 /* A problem: a bordered note above the button */
